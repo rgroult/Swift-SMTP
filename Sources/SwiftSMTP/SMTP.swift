@@ -53,7 +53,7 @@ public struct SMTP {
     ///     - tlsMode: TLSMode `enum` indicating what form of connection security to use.
     ///     - tlsConfiguration: `TLSConfiguration` used to connect with TLS. If nil, a configuration with no backing
     ///       certificates is used. See `TLSConfiguration` for other configuration options.
-    ///     - authMethods: `AuthMethod`s to use to log in to the server. If blank, tries all supported methods.
+    ///     - authMethods: `AuthMethod`s to use to log in to the server. If blank, password will be ignored and no auth will be performed
     ///     - domainName: Client domain name used when communicating with the server. Defaults to `localhost`.
     ///     - timeout: How long to try connecting to the server to before returning an error. Defaults to `10` seconds.
     ///
@@ -77,14 +77,14 @@ public struct SMTP {
         self.tlsMode = tlsMode
         self.tlsConfiguration = tlsConfiguration
 
-        let _authMethods = !authMethods.isEmpty ? authMethods : [
+      /*  let _authMethods = !authMethods.isEmpty ? authMethods : [
             AuthMethod.cramMD5,
             AuthMethod.login,
             AuthMethod.plain,
             AuthMethod.xoauth2
-        ]
+        ]*/
         var authMethodsDictionary = [String: AuthMethod]()
-        _authMethods.forEach { authMethod in
+        authMethods.forEach { authMethod in
             authMethodsDictionary[authMethod.rawValue] = authMethod
         }
         self.authMethods = authMethodsDictionary
